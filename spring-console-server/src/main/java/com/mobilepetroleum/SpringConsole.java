@@ -2,26 +2,29 @@ package com.mobilepetroleum;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
-public class SpringConsole implements ApplicationContextAware {
+public class SpringConsole implements ApplicationContextAware, ApplicationListener {
 
     private int port = 25001;
     private ApplicationContext applicationContext;
     private SpringServiceBean serviceBean = new SpringServiceBean();
     private Registry registry;
 
-    public SpringConsole(int port) {
-        this.port = port;
-    }
+    @SuppressWarnings("UnusedDeclaration")
+    public SpringConsole(int port) { this.port = port; }
 
-    public SpringConsole() {
-    }
+    @SuppressWarnings("UnusedDeclaration")
+    public SpringConsole() { }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void start() {
         try {
             registry = LocateRegistry.createRegistry(port);
@@ -32,14 +35,13 @@ public class SpringConsole implements ApplicationContextAware {
         }
     }
 
+
     public void close() {
-        System.out.println("close");
         try {
             registry.unbind("spring-console");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             UnicastRemoteObject.unexportObject(serviceBean, true);
         } catch (Exception e) {
@@ -49,5 +51,9 @@ public class SpringConsole implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    public void onApplicationEvent(ApplicationEvent applicationEvent) {
+        if (applicationEvent instanceof ContextClosedEvent) close();
     }
 }

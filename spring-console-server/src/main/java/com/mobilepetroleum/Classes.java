@@ -8,8 +8,15 @@ public class Classes {
         try {
             return ClassUtils.forName(name);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
+    static Object invoke(Object o, String methodName, Class<?>[] types, Object[] params) {
+        try {
+            return o.getClass().getDeclaredMethod(methodName, types).invoke(o, params);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

@@ -4,9 +4,16 @@ package com.mobilepetroleum;
 import com.google.gson.Gson;
 import org.springframework.context.ApplicationContext;
 
+import java.rmi.RemoteException;
+
 class SpringServiceBean implements SpringService {
 
+    public static final Gson GSON = new Gson();
     private ApplicationContext applicationContext;
+
+    public String invoke(Invocable invocable) throws RemoteException {
+        return invoke(invocable.getBeanName(), invocable.getMethodName(), invocable.getParameters());
+    }
 
     public String invoke(String beanName, String methodName, MethodParameter[] parameters) {
         try {
@@ -20,26 +27,17 @@ class SpringServiceBean implements SpringService {
                 params[i] = createObject(parameter);
             }
 
-            Object result = invoke(bean, methodName, types, params);
-            return new Gson().toJson(result);
+            Object result = Classes.invoke(bean, methodName, types, params);
+            return GSON.toJson(result);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     private Object createObject(MethodParameter parameter) {
         String value = parameter.getValue();
         String type = parameter.getType();
-        return new Gson().fromJson(value, Classes.forName(type));
-    }
-
-    private Object invoke(Object o, String methodName, Class<?>[] types, Object[] params) {
-        try {
-            return o.getClass().getDeclaredMethod(methodName, types).invoke(o, params);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return GSON.fromJson(value, Classes.forName(type));
     }
 
     void setApplicationContext(ApplicationContext applicationContext) {
