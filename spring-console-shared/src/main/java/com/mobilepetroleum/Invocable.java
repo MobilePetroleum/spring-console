@@ -1,6 +1,8 @@
 package com.mobilepetroleum;
 
-public class Invocable {
+import java.io.Serializable;
+
+public class Invocable implements Serializable {
     
     private final String beanName;
     private final String methodName;
@@ -12,16 +14,10 @@ public class Invocable {
         this.parameters = parameters;
     }
 
-    public String getBeanName() {
-        return beanName;
-    }
+    public String getBeanName() { return beanName; }
 
-    public String getMethodName() {
-        return methodName;
-    }
+    public String getMethodName() { return methodName; }
 
-    public MethodParameter[] getParameters() {
-        return parameters;
-    }
+    public MethodParameter[] getParameters() { return parameters; }
 
 }

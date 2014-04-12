@@ -1,44 +1,57 @@
 package com.mobilepetroleum;
 
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-@SuppressWarnings("SpringJavaAutowiringInspection")
-public class SpringConsole implements ApplicationContextAware, ApplicationListener {
+@SuppressWarnings({"SpringJavaAutowiringInspection", "UnusedDeclaration"})
+public class SpringConsole implements ApplicationListener, DisposableBean {
 
+    private final SpringServiceBean serviceBean = new SpringServiceBean();
+    private String serviceNameInRegistry = "spring-console";
     private int port = 25001;
-    private ApplicationContext applicationContext;
-    private SpringServiceBean serviceBean = new SpringServiceBean();
     private Registry registry;
 
-    @SuppressWarnings("UnusedDeclaration")
-    public SpringConsole(int port) { this.port = port; }
-
-    @SuppressWarnings("UnusedDeclaration")
     public SpringConsole() { }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void start() {
+    public SpringConsole(int port) {
+        this.port = port;
+    }
+
+    public SpringConsole(int port, String serviceNameInRegistry) {
+        this.port = port;
+        this.serviceNameInRegistry = serviceNameInRegistry;
+    }
+
+    public SpringConsole(Registry registry) {
+        this.registry = registry;
+    }
+
+    public SpringConsole(Registry registry, String serviceNameInRegistry) {
+        this.registry = registry;
+        this.serviceNameInRegistry = serviceNameInRegistry;
+    }
+
+    void start(ApplicationContext applicationContext) {
         try {
-            registry = LocateRegistry.createRegistry(port);
+            if (registry == null) registry = LocateRegistry.createRegistry(port);
+
             serviceBean.setApplicationContext(applicationContext);
-            registry.bind("spring-console", UnicastRemoteObject.exportObject(serviceBean, port));
+            registry.rebind(serviceNameInRegistry, UnicastRemoteObject.exportObject(serviceBean, port));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    public void close() {
+    void close() {
         try {
-            registry.unbind("spring-console");
+            registry.unbind(serviceNameInRegistry);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,11 +62,15 @@ public class SpringConsole implements ApplicationContextAware, ApplicationListen
         }
     }
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    // @Override
+    public void onApplicationEvent(ApplicationEvent applicationEvent) {
+        if (applicationEvent instanceof ContextRefreshedEvent) {
+            start(((ContextRefreshedEvent) applicationEvent).getApplicationContext());
+        }
     }
 
-    public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        if (applicationEvent instanceof ContextClosedEvent) close();
+    // @Override
+    public void destroy() throws Exception {
+        close();
     }
 }

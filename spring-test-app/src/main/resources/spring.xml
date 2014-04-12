@@ -2,15 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <bean name="springConsole" class="com.mobilepetroleum.SpringConsole" init-method="start"/>
+    <bean name="springConsole" class="com.mobilepetroleum.SpringConsole"/>
 
     <bean name="countDownLatch" class="java.util.concurrent.CountDownLatch">
-        <constructor-arg value="1"/>
+        <constructor-arg value="5"/>
     </bean>
 
     <bean name="sampleBean" class="com.mobilepetroleum.SampleBean"/>
+    <bean name="returner" class="com.mobilepetroleum.Returner"/>
     <bean name="sampleArrayBean" class="com.mobilepetroleum.SampleArrayBean"/>
     <bean name="closer" class="com.mobilepetroleum.Closer">
         <constructor-arg ref="countDownLatch"/>

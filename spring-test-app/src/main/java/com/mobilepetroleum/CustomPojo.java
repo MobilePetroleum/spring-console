@@ -1,8 +1,16 @@
 package com.mobilepetroleum;
 
+@SuppressWarnings("UnusedDeclaration")
 public class CustomPojo {
     private String string;
     private int anInt;
+
+    public CustomPojo() { }
+
+    public CustomPojo(String string, int anInt) {
+        this.string = string;
+        this.anInt = anInt;
+    }
 
     public String getString() { return string; }
 

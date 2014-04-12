@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
+            <groupId>com.mobilepetroleum</groupId>
             <artifactId>spring-console-server</artifactId>
             <version>${project.version}</version>
         </dependency>
