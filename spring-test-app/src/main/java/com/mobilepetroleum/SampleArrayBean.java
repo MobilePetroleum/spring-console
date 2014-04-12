@@ -2,7 +2,8 @@ package com.mobilepetroleum;
 
 import java.util.Arrays;
 
-public class SampleArrayBean {
+@SuppressWarnings("UnusedDeclaration")
+class SampleArrayBean {
     public void callLong(long[] l) { System.out.println("callLong[]: " + Arrays.toString(l)); }
 
     public void callBigLong(Long[] l) { System.out.println("callBigLong[]: " + Arrays.toString(l)); }

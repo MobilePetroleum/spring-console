@@ -58,16 +58,15 @@
                                     <goal>shade</goal>
                                 </goals>
                                 <configuration>
+                                    <createDependencyReducedPom>false</createDependencyReducedPom>
                                     <minimizeJar>true</minimizeJar>
-                                    <artifactSet>
-                                        <includes>
-                                            <include>com.mobilepetroleum</include>
-                                        </includes>
-                                    </artifactSet>
                                     <relocations>
                                         <relocation>
                                             <pattern>com.google.gson</pattern>
                                             <shadedPattern>shade.com.google.gson</shadedPattern>
+                                            <includes>
+                                                <include>com.google.gson.*</include>
+                                            </includes>
                                         </relocation>
                                     </relocations>
                                 </configuration>

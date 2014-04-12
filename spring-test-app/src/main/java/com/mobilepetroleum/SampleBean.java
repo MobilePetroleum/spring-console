@@ -1,7 +1,8 @@
 package com.mobilepetroleum;
 
 
-public class SampleBean {
+@SuppressWarnings("UnusedDeclaration")
+class SampleBean {
 
     public void callLong(long l) { System.out.println("callLong: " + l); }
 

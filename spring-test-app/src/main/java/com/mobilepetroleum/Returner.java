@@ -1,30 +1,30 @@
 package com.mobilepetroleum;
 
 @SuppressWarnings("UnusedDeclaration")
-public class Returner {
-    long returnLong() { return 999L; }
+class Returner {
+    private long returnLong() { return 999L; }
 
-    long returnBigLong() { return 999L; }
+    private long returnBigLong() { return 999L; }
 
-    short returnShort() { return (short) 999; }
+    private short returnShort() { return (short) 999; }
 
-    Short returnBigShort() { return (short) 999; }
+    private Short returnBigShort() { return (short) 999; }
 
-    byte returnByte() { return (byte) 128; }
+    private byte returnByte() { return (byte) 128; }
 
-    Byte returnBugByte() { return (byte) 128; }
+    private Byte returnBugByte() { return (byte) 128; }
 
-    float returnFloat() { return 999.9f; }
+    private float returnFloat() { return 999.9f; }
 
-    Float returnBigFloat() { return 999.9f; }
+    private Float returnBigFloat() { return 999.9f; }
 
-    double returnDouble() { return 999.9d; }
+    private double returnDouble() { return 999.9d; }
 
-    Double returnBigDouble() { return 999.9d; }
+    private Double returnBigDouble() { return 999.9d; }
 
-    char returnChar() { return 'a'; }
+    private char returnChar() { return 'a'; }
 
-    Character returnBigChar() { return 'a'; }
+    private Character returnBigChar() { return 'a'; }
 
-    CustomPojo returnCustomObject() { return new CustomPojo("s999s", 999); }
+    private CustomPojo returnCustomObject() { return new CustomPojo("s999s", 999); }
 }

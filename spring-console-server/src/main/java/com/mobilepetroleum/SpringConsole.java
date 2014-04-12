@@ -38,7 +38,7 @@ public class SpringConsole implements ApplicationListener, DisposableBean {
         this.serviceNameInRegistry = serviceNameInRegistry;
     }
 
-    void start(ApplicationContext applicationContext) {
+    private void start(ApplicationContext applicationContext) {
         try {
             if (registry == null) registry = LocateRegistry.createRegistry(port);
 
@@ -49,7 +49,7 @@ public class SpringConsole implements ApplicationListener, DisposableBean {
         }
     }
 
-    void close() {
+    private void close() {
         try {
             registry.unbind(serviceNameInRegistry);
         } catch (Exception e) {

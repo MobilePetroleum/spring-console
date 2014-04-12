@@ -2,9 +2,11 @@ package com.mobilepetroleum;
 
 import org.springframework.util.ClassUtils;
 
-public class Classes {
+import java.lang.reflect.Method;
 
-    public static Class<?> forName(String name) {
+class Classes {
+
+    static Class<?> forName(String name) {
         try {
             return ClassUtils.forName(name);
         } catch (Exception e) {
@@ -12,9 +14,27 @@ public class Classes {
         }
     }
 
-    static Object invoke(Object o, String methodName, Class<?>[] types, Object[] params) {
+    static Object invoke(Object object, String methodName, Class<?>[] types, Object[] params) {
+        return invoke(object, object.getClass(), methodName, types, params);
+    }
+
+    private static Object invoke(Object object, Class<?> clazz, String methodName, Class<?>[] types, Object[] params) {
         try {
-            return o.getClass().getDeclaredMethod(methodName, types).invoke(o, params);
+
+            Method declaredMethod;
+
+            try {
+                declaredMethod = clazz.getDeclaredMethod(methodName, types);
+            } catch (NoSuchMethodException e) {
+                if (!clazz.equals(Object.class)) {
+                    return invoke(object, clazz.getSuperclass(), methodName, types, params);
+                } else {
+                    throw new RuntimeException(String.format("Cannot find %s:%s", object.getClass().getName(), methodName));
+                }
+            }
+
+            declaredMethod.setAccessible(true);
+            return declaredMethod.invoke(object, params);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

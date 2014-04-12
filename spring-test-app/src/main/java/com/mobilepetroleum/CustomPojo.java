@@ -1,7 +1,7 @@
 package com.mobilepetroleum;
 
 @SuppressWarnings("UnusedDeclaration")
-public class CustomPojo {
+class CustomPojo {
     private String string;
     private int anInt;
 
