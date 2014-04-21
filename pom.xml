@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mobilepetroleum</groupId>
-    <artifactId>spring-console</artifactId>
+    <artifactId>spring-console-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,7 +17,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>spring-console-server</module>
+        <module>spring-console</module>
         <module>spring-console-shared</module>
         <module>spring-test-app</module>
     </modules>

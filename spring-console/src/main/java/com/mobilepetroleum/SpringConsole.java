@@ -14,36 +14,43 @@ import java.rmi.server.UnicastRemoteObject;
 public class SpringConsole implements ApplicationListener, DisposableBean {
 
     private final SpringServiceBean serviceBean = new SpringServiceBean();
-    private String serviceNameInRegistry = "spring-console";
-    private int port = 25001;
-    private Registry registry;
+
+    private String serviceNameInRmiRegistry = "spring-console";
+    private int rmiRegistryPort = 25001;
+    private Registry rmiRegistry;
 
     public SpringConsole() { }
 
-    public SpringConsole(int port) {
-        this.port = port;
+    public String getServiceNameInRmiRegistry() {
+        return serviceNameInRmiRegistry;
     }
 
-    public SpringConsole(int port, String serviceNameInRegistry) {
-        this.port = port;
-        this.serviceNameInRegistry = serviceNameInRegistry;
+    public void setServiceNameInRmiRegistry(String serviceNameInRmiRegistry) {
+        this.serviceNameInRmiRegistry = serviceNameInRmiRegistry;
     }
 
-    public SpringConsole(Registry registry) {
-        this.registry = registry;
+    public int getRmiRegistryPort() {
+        return rmiRegistryPort;
     }
 
-    public SpringConsole(Registry registry, String serviceNameInRegistry) {
-        this.registry = registry;
-        this.serviceNameInRegistry = serviceNameInRegistry;
+    public void setRmiRegistryPort(int rmiRegistryPort) {
+        this.rmiRegistryPort = rmiRegistryPort;
+    }
+
+    public Registry getRmiRegistry() {
+        return rmiRegistry;
+    }
+
+    public void setRmiRegistry(Registry rmiRegistry) {
+        this.rmiRegistry = rmiRegistry;
     }
 
     private void start(ApplicationContext applicationContext) {
         try {
-            if (registry == null) registry = LocateRegistry.createRegistry(port);
+            if (rmiRegistry == null) rmiRegistry = LocateRegistry.createRegistry(rmiRegistryPort);
 
             serviceBean.setApplicationContext(applicationContext);
-            registry.rebind(serviceNameInRegistry, UnicastRemoteObject.exportObject(serviceBean, port));
+            rmiRegistry.rebind(serviceNameInRmiRegistry, UnicastRemoteObject.exportObject(serviceBean, rmiRegistryPort));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -51,7 +58,7 @@ public class SpringConsole implements ApplicationListener, DisposableBean {
 
     private void close() {
         try {
-            registry.unbind(serviceNameInRegistry);
+            rmiRegistry.unbind(serviceNameInRmiRegistry);
         } catch (Exception e) {
             e.printStackTrace();
         }
