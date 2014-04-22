@@ -3,7 +3,7 @@ package com.google.gson;
 
 import org.junit.Test;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class GsonTest {
 
@@ -17,7 +17,6 @@ public class GsonTest {
         // then
         assertThat(data).isEqualTo("data");
     }
-
 
     @Test
     public void shouldParseNumber() throws Exception {
