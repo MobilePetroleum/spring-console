@@ -1,0 +1,27 @@
+{
+    "remotes": [
+        { "name": "server1", "ip" : "localhost", "port" : "25001", "rmiName" : "__spring-console" }
+    ],
+
+    "invocations" : [
+        {
+            "beanName": "sampleBean",
+            "method": "callCustomObject",
+            "params": ["int", "long", "com.mobilepetroleum.CustomPojo"],
+            "values": ["1", "123", { "string": "asd", "anInt": 123 }]
+        },
+        {
+            "beanName": "sampleBean",
+            "method": "callCustomObject",
+            "params": ["int", "long", "com.mobilepetroleum.CustomPojo"],
+            "values": ["1", "123", { "string": "asd", "anInt": 123 }]
+        },
+
+        { "beanName": "returner", "method": "returnLong" },
+        { "beanName": "returner", "method": "returnDouble" },
+        { "beanName": "returner", "method": "returnBigChar" },
+        { "beanName": "returner", "method": "returnCustomObject" },
+        { "beanName": "closer", "method": "close" }
+
+    ]
+}

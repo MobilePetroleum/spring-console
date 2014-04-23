@@ -1,0 +1,10 @@
+spring-console use:
+aopalliance-1.0.jar which is under Public Domain
+google-gson which is under Apache License 2.0
+guava-libraries which is under Apache License 2.0
+google-guice which is under Apache License 2.0
+javax.inject-1 which is under Apache License 2.0
+logback under LGPL 2.1 (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+scala-library which license you can find in scala-library-license.txt
+slf4j which license you can find in argparse4j-license.txt
+

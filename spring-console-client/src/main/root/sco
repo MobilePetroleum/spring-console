@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#JAVA_HOME=C:\Program Files\Java\alternative_version\
+
+JAVA="java"
+
+if [ -n "$JAVA_HOME" ] ; then
+    JAVA="$JAVA_HOME/bin/java"
+fi
+
+if [ -z "$SCO_HOME" ] ; then
+  PRG="$0"
+
+  while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+      PRG="$link"
+    else
+      PRG="`dirname "$PRG"`/$link"
+    fi
+  done
+  saveddir=`pwd`
+  SCO_HOME=`dirname "$PRG"`
+  SCO_HOME=`cd "$SCO_HOME" && pwd`
+  cd "$saveddir"
+fi
+
+$JAVA -jar "$SCO_HOME/spring-console-client.jar" "$@"
