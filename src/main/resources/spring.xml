@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean name="springConsole" class="com.mobilepetroleum.SpringConsole">
+        <!-- All properties are optional -->
+        <!-- Creates Spring Console service under given name in RMI Registry, default is spring-console -->
+        <property name="serviceNameInRmiRegistry" value="__spring-console"/>
+        <!-- Creates RMI Registry on given port, default is 25001 -->
+        <property name="rmiRegistryPort" value="25001"/>
+
+        <!-- If specified then Spring Console service will be exposed by given registry -->
+        <!-- By default RMI Registry is created on given port -->
+        <!--<property name="rmiRegistry" ref="customRmiRegistry"/>-->
+    </bean>
+
+    <bean name="countDownLatch" class="java.util.concurrent.CountDownLatch">
+        <constructor-arg value="5"/>
+    </bean>
+
+    <bean name="sampleBean" class="com.mobilepetroleum.SampleBean"/>
+    <bean name="returner" class="com.mobilepetroleum.Returner"/>
+    <bean name="sampleArrayBean" class="com.mobilepetroleum.SampleArrayBean"/>
+    <bean name="closer" class="com.mobilepetroleum.Closer">
+        <constructor-arg ref="countDownLatch"/>
+    </bean>
+
+</beans>
