@@ -14,14 +14,6 @@
             <outputDirectory>/</outputDirectory>
             <fileMode>0770</fileMode>
         </fileSet>
-        <fileSet>
-            <directory>${project.build.directory}</directory>
-            <includes>
-                <include>${project.build.finalName}.jar</include>
-            </includes>
-            <outputDirectory>/</outputDirectory>
-            <fileMode>0660</fileMode>
-        </fileSet>
     </fileSets>
     <dependencySets>
         <dependencySet>
@@ -29,7 +21,7 @@
             <useProjectArtifact>true</useProjectArtifact>
             <scope>runtime</scope>
             <excludes>
-                <exclude>com.mobilepetroleum:client</exclude>
+                <exclude>com.mobilepetroleum:spring-console-client</exclude>
             </excludes>
             <fileMode>0660</fileMode>
         </dependencySet>
@@ -38,7 +30,7 @@
         <file>
             <source>target/${project.build.finalName}.jar</source>
             <outputDirectory>/</outputDirectory>
-            <destName>${project.build.finalName}.jar</destName>
+            <destName>${project.name}.jar</destName>
             <fileMode>0660</fileMode>
         </file>
     </files>

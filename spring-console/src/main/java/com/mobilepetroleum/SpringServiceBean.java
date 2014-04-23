@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
 class SpringServiceBean implements SpringService {
 
     public static final Gson GSON = new Gson();
+
+    private final static ResultToStringConverter resultToStringConverter = new ResultToStringConverter();
+
     private ApplicationContext applicationContext;
 
     public String invoke(Invocable invocable) throws RemoteException {
@@ -28,7 +31,7 @@ class SpringServiceBean implements SpringService {
             }
 
             Object result = Classes.invoke(bean, methodName, types, params);
-            return GSON.toJson(result);
+            return resultToStringConverter.toString(result);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
