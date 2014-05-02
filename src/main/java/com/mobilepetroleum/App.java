@@ -1,8 +1,7 @@
 package com.mobilepetroleum;
 
+import com.mobilepetroleum.test.TestRunner;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.concurrent.CountDownLatch;
 
 class App {
 
@@ -12,9 +11,7 @@ class App {
         {
             ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 
-            CountDownLatch countDownLatch = (CountDownLatch) ctx.getBean("countDownLatch");
-
-            countDownLatch.await();
+            ((TestRunner) ctx.getBean("testRunner")).execute();
 
             ctx.close();
         }

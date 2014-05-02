@@ -9,22 +9,30 @@
         <!-- Creates Spring Console service under given name in RMI Registry, default is spring-console -->
         <property name="serviceNameInRmiRegistry" value="__spring-console"/>
         <!-- Creates RMI Registry on given port, default is 25001 -->
-        <property name="rmiRegistryPort" value="25001"/>
+        <property name="rmiRegistryPort" value="25002"/>
+
+        <!-- Whitelist of what spring console can call, default is all (.*) -->
+        <property name="whitelist">
+            <list>
+                <!-- All methods of classes that name ends at Bean -->
+                <value>.*:.*:.*Bean:.*</value>
+            </list>
+        </property>
 
         <!-- If specified then Spring Console service will be exposed by given registry -->
         <!-- By default RMI Registry is created on given port -->
         <!--<property name="rmiRegistry" ref="customRmiRegistry"/>-->
-    </bean>
 
-    <bean name="countDownLatch" class="java.util.concurrent.CountDownLatch">
-        <constructor-arg value="5"/>
     </bean>
 
     <bean name="sampleBean" class="com.mobilepetroleum.SampleBean"/>
-    <bean name="returner" class="com.mobilepetroleum.Returner"/>
+    <bean name="returnerBean" class="com.mobilepetroleum.ReturnerBean"/>
     <bean name="sampleArrayBean" class="com.mobilepetroleum.SampleArrayBean"/>
-    <bean name="closer" class="com.mobilepetroleum.Closer">
-        <constructor-arg ref="countDownLatch"/>
+    <bean name="restricted" class="com.mobilepetroleum.Restricted"/>
+
+    <bean name="testRunner" class="com.mobilepetroleum.test.TestRunner">
+        <constructor-arg value="${project.build.directory}${fs}spring-console-client-${spring-console.version}${fs}sco.bat"/>
+        <constructor-arg value="${project.build.outputDirectory}${fs}execute.json"/>
     </bean>
 
 </beans>
