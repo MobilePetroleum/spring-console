@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -18,39 +17,16 @@ public class SpringConsole implements ApplicationListener, DisposableBean {
 
     private String serviceNameInRmiRegistry = "spring-console";
     private int rmiRegistryPort = 25001;
+    private String[] whitelist = new String[]{".*"};
     private Registry rmiRegistry;
 
     public SpringConsole() { }
 
-    public String getServiceNameInRmiRegistry() {
-        return serviceNameInRmiRegistry;
-    }
-
-    public void setServiceNameInRmiRegistry(String serviceNameInRmiRegistry) {
-        this.serviceNameInRmiRegistry = serviceNameInRmiRegistry;
-    }
-
-    public int getRmiRegistryPort() {
-        return rmiRegistryPort;
-    }
-
-    public void setRmiRegistryPort(int rmiRegistryPort) {
-        this.rmiRegistryPort = rmiRegistryPort;
-    }
-
-    public Registry getRmiRegistry() {
-        return rmiRegistry;
-    }
-
-    public void setRmiRegistry(Registry rmiRegistry) {
-        this.rmiRegistry = rmiRegistry;
-    }
-
     private void start(ApplicationContext applicationContext) {
         try {
             if (rmiRegistry == null) rmiRegistry = LocateRegistry.createRegistry(rmiRegistryPort);
-
             serviceBean.setApplicationContext(applicationContext);
+            serviceBean.setAllowedPatterns(whitelist);
             rmiRegistry.rebind(serviceNameInRmiRegistry, UnicastRemoteObject.exportObject(serviceBean, rmiRegistryPort));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -78,7 +54,21 @@ public class SpringConsole implements ApplicationListener, DisposableBean {
     }
 
     // @Override
-    public void destroy() throws Exception {
-        close();
-    }
+    public void destroy() throws Exception { close(); }
+
+    public String getServiceNameInRmiRegistry() { return serviceNameInRmiRegistry; }
+
+    public void setServiceNameInRmiRegistry(String serviceNameInRmiRegistry) { this.serviceNameInRmiRegistry = serviceNameInRmiRegistry; }
+
+    public int getRmiRegistryPort() { return rmiRegistryPort; }
+
+    public void setRmiRegistryPort(int rmiRegistryPort) { this.rmiRegistryPort = rmiRegistryPort; }
+
+    public Registry getRmiRegistry() { return rmiRegistry; }
+
+    public void setRmiRegistry(Registry rmiRegistry) { this.rmiRegistry = rmiRegistry; }
+
+    public String[] getWhitelist() { return whitelist; }
+
+    public void setWhitelist(String[] whitelist) { this.whitelist = whitelist; }
 }

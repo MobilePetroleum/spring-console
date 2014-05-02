@@ -2,15 +2,45 @@ package com.mobilepetroleum;
 
 import org.springframework.util.ClassUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 class Classes {
 
     static Class<?> forName(String name) {
         try {
-            return ClassUtils.forName(name);
+            return ClassUtils.forName(name, Classes.class.getClassLoader());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    static Optional<Method> findMethod(Object object, String methodName, Class<?>[] types) {
+        return findMethod(object, object.getClass(), methodName, types);
+    }
+
+    static Optional<Method> findMethod(Object object, String methodName) {
+        return findMethod(object, object.getClass(), methodName, new Class[]{});
+    }
+
+    static Object invoke(Object object, Method method, Object[] params) {
+        method.setAccessible(true);
+        try {
+            return method.invoke(object, params);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private static Optional<Method> findMethod(Object object, Class<?> clazz, String methodName, Class<?>[] types) {
+        try {
+            return Optional.of(clazz.getDeclaredMethod(methodName, types));
+        } catch (NoSuchMethodException e) {
+            if (Object.class.equals(clazz)) {
+                return Optional.<Method>empty();
+            } else {
+                return findMethod(object, clazz.getSuperclass(), methodName, types);
+            }
         }
     }
 

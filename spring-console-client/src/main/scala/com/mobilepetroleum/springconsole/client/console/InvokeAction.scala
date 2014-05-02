@@ -30,21 +30,20 @@ class InvokeAction extends ParameterAction {
 
     for (invocation <- invocations) {
       try {
-        logger.info(represent(invocation))
+        logger.info(represent(remote, invocation))
         val result = springService.invoke(invocation)
-        logger.info(s"Result: $result")
+        logger.info(s"[${remote.name}] Result: $result")
       } catch {
-        case e: Exception => logger.error(s"[${remote.ip}:${remote.port}]Invocation error: ${e.getMessage}".replace("\n", " "), e)
+        case e: Exception => logger.error(s"[${remote.name}] ${e.getMessage}".replace("\n", " "), e)
       }
     }
 
   }
 
-
-  def represent(invocation: Invocation): String = {
+  def represent(remote: Remote, invocation: Invocation): String = {
     val params = for (i <- 0 until invocation.params.length)
     yield gson.toJson(invocation.values.getAsJsonArray.get(i))
 
-    s"${invocation.beanName}::${invocation.method}" + params.mkString("(", ", ", ")")
+    s"[${remote.name}] ${invocation.beanName}::${invocation.method}" + params.mkString("(", ", ", ")")
   }
 }

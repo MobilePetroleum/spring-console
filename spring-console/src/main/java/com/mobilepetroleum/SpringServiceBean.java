@@ -4,11 +4,13 @@ package com.mobilepetroleum;
 import com.google.gson.Gson;
 import org.springframework.context.ApplicationContext;
 
+import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 
 class SpringServiceBean implements SpringService {
 
     public static final Gson GSON = new Gson();
+    private static final Restrictions restrictions = new Restrictions();
 
     private final static ResultToStringConverter resultToStringConverter = new ResultToStringConverter();
 
@@ -20,6 +22,9 @@ class SpringServiceBean implements SpringService {
 
     public String invoke(String beanName, String methodName, MethodParameter[] parameters) {
         try {
+            if (!applicationContext.containsBean(beanName)) {
+                throw beanOrMethodNotFoundOrAllowed(beanName);
+            }
             Object bean = applicationContext.getBean(beanName);
             Object[] params = new Object[parameters.length];
             Class<?>[] types = new Class<?>[parameters.length];
@@ -30,12 +35,23 @@ class SpringServiceBean implements SpringService {
                 params[i] = createObject(parameter);
             }
 
-            Object result = Classes.invoke(bean, methodName, types, params);
+            Optional<Method> method = Classes.findMethod(bean, methodName, types);
+
+            if (!method.isPresent()) {
+                throw beanOrMethodNotFoundOrAllowed(beanName);
+            }
+
+            if (!restrictions.allowed(bean, method.get())) {
+                throw beanOrMethodNotFoundOrAllowed(beanName);
+            }
+            Object result = Classes.invoke(bean, method.get(), params);
             return resultToStringConverter.toString(result);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    private RuntimeException beanOrMethodNotFoundOrAllowed(String beanName) {return new RuntimeException(String.format("No bean named '%s' or method is accessible or found", beanName));}
 
     private Object createObject(MethodParameter parameter) {
         String value = parameter.getValue();
@@ -43,7 +59,9 @@ class SpringServiceBean implements SpringService {
         return GSON.fromJson(value, Classes.forName(type));
     }
 
-    void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+    void setApplicationContext(ApplicationContext applicationContext) { this.applicationContext = applicationContext; }
+
+    public static String[] getAllowedPatterns() { return restrictions.getWhitelist(); }
+
+    public static void setAllowedPatterns(String[] allowedPatterns) { restrictions.setWhitelist(allowedPatterns); }
 }
