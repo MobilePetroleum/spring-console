@@ -1,7 +1,5 @@
 package com.mobilepetroleum;
 
-import com.google.gson.Gson;
-
 class ResultToStringConverter {
 
     Gson gson = new Gson();
