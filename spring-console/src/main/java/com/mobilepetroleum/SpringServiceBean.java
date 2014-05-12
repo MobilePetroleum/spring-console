@@ -25,6 +25,7 @@ class SpringServiceBean implements SpringService {
             if (!applicationContext.containsBean(beanName)) {
                 throw beanOrMethodNotFoundOrAllowed(beanName);
             }
+            Class type = applicationContext.getType(beanName);
             Object bean = applicationContext.getBean(beanName);
             Object[] params = new Object[parameters.length];
             Class<?>[] types = new Class<?>[parameters.length];
@@ -35,13 +36,13 @@ class SpringServiceBean implements SpringService {
                 params[i] = createObject(parameter);
             }
 
-            Optional<Method> method = Classes.findMethod(bean, methodName, types);
+            Optional<Method> method = Classes.findMethod(type, methodName, types);
 
             if (!method.isPresent()) {
                 throw beanOrMethodNotFoundOrAllowed(beanName);
             }
 
-            if (!restrictions.allowed(bean, method.get())) {
+            if (!restrictions.allowed(type, method.get())) {
                 throw beanOrMethodNotFoundOrAllowed(beanName);
             }
             Object result = Classes.invoke(bean, method.get(), params);

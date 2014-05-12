@@ -14,7 +14,7 @@ public class RestrictionsTest {
         restrictions.setWhitelist(new String[]{"public:com\\.mobilepetroleum:.*"});
 
         // when
-        boolean allowed = restrictions.allowed(new RestrictionsTest(), findMethod(this, "shouldAllowPublicMethods").get());
+        boolean allowed = restrictions.allowed(RestrictionsTest.class, findMethod(this, "shouldAllowPublicMethods").get());
 
         // then
         assertThat(allowed).isTrue();
@@ -27,7 +27,7 @@ public class RestrictionsTest {
         restrictions.setWhitelist(new String[]{"private:com\\.mobilepetroleum:.*"});
 
         // when
-        boolean allowed = restrictions.allowed(new RestrictionsTest(), findMethod(this, "shouldAllowPrivateMethods").get());
+        boolean allowed = restrictions.allowed(RestrictionsTest.class, findMethod(this, "shouldAllowPrivateMethods").get());
 
         // then
         assertThat(allowed).isFalse();
@@ -40,7 +40,7 @@ public class RestrictionsTest {
         restrictions.setWhitelist(new String[]{".*"});
 
         // when
-        boolean allowed = restrictions.allowed(new RestrictionsTest(), findMethod(this, "shouldAllowAll").get());
+        boolean allowed = restrictions.allowed(RestrictionsTest.class, findMethod(this, "shouldAllowAll").get());
 
         // then
         assertThat(allowed).isTrue();

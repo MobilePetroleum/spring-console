@@ -9,8 +9,8 @@ class Restrictions {
     private String[] whitelist = new String[]{};
     private Pattern[] patterns = new Pattern[]{Pattern.compile(".*")};
 
-    public boolean allowed(Object bean, Method method) {
-        String path = buildFullPath(bean, method);
+    public boolean allowed(Class<?> aClass, Method method) {
+        String path = buildFullPath(aClass, method);
         for (Pattern pattern : patterns) {
             if (allowed(pattern, path)) {
                 return true;
@@ -23,7 +23,7 @@ class Restrictions {
         return pattern.matcher(path).matches();
     }
 
-    private String buildFullPath(Object bean, Method method) {
+    private String buildFullPath(Class<?> aClass, Method method) {
         int modifiers = method.getModifiers();
 
         String modifier = "package-local";
@@ -35,7 +35,6 @@ class Restrictions {
             modifier = "public";
         }
 
-        Class<?> aClass = bean.getClass();
         String packageName = aClass.getPackage().getName();
         String className = aClass.getSimpleName();
         String methodName = method.getName();

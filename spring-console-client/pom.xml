@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.mobilepetroleum</groupId>
         <artifactId>spring-console-parent</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-console-client</artifactId>
@@ -17,8 +17,9 @@
         <slf4j.version>1.7.6</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <logback.version>1.1.1</logback.version>
-        <guice.version>3.0</guice.version>
-        <guava.version>16.0.1</guava.version>
+
+        <fs>${file.separator}</fs>
+        <executable>${JAVA_1_5_HOME}${fs}bin${fs}javac</executable>
     </properties>
 
     <dependencies>
@@ -26,37 +27,6 @@
             <groupId>com.mobilepetroleum</groupId>
             <artifactId>spring-console-shared</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!-- SCALA -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>2.11.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- GUICE -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
@@ -99,51 +69,20 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.1.6</version>
-                <executions>
-                    <execution>
-                        <id>scala-compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <args>
-                        <arg>-target:jvm-1.6</arg>
-                    </args>
-                    <javacArgs>
-                        <javacArg>-source</javacArg>
-                        <javacArg>1.6</javacArg>
-                        <javacArg>-target</javacArg>
-                        <javacArg>1.6</javacArg>
-                        <javacArg>-bootclasspath</javacArg>
-                        <javacArg>${JAVA_1_6_HOME}${fs}jre${fs}lib${fs}rt.jar</javacArg>
-                    </javacArgs>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <encoding>UTF-8</encoding>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <executable>${executable}</executable>
+                    <compilerArguments>
+                        <bootclasspath>${JAVA_1_5_HOME}${fs}jre${fs}lib${fs}rt.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>
