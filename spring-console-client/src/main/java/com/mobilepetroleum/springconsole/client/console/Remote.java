@@ -3,7 +3,7 @@ package com.mobilepetroleum.springconsole.client.console;
 class Remote {
     private String name = "noname";
     private String ip = "localhost";
-    private String port = "port";
+    private String port = "25001";
     private String rmiName = "spring-console";
 
     public String getName() {
