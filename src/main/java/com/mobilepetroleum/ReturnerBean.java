@@ -12,7 +12,7 @@ class ReturnerBean {
 
     private byte returnByte() { return (byte) 128; }
 
-    private Byte returnBugByte() { return (byte) 128; }
+    Byte returnBigByte() { return (byte) 128; }
 
     private float returnFloat() { return 999.9f; }
 

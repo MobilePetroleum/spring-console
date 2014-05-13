@@ -7,14 +7,13 @@
         {
             "beanName": "sampleBean",
             "method": "callCustomObject",
-            "params": ["int", "long", "com.mobilepetroleum.CustomPojo"],
-            "values": ["1", "123", { "string": "asd", "anInt": 123 }]
+            "types": ["int", "long", "com.mobilepetroleum.CustomPojo"],
+            "args": ["1", "123", { "string": "asd", "anInt": 123 }]
         },
         {
             "beanName": "sampleBean",
             "method": "callCustomObject",
-            "params": ["int", "long", "com.mobilepetroleum.CustomPojo"],
-            "values": ["1", "123", { "string": "asd", "anInt": 123 }]
+            "args": ["1", "123", { "string": "asd", "anInt": 123 }]
         },
 
         { "beanName": "returnerBean", "method": "returnLong" },
@@ -22,7 +21,9 @@
         { "beanName": "returnerBean", "method": "returnBigChar" },
         { "beanName": "returnerBean", "method": "returnCustomObject" },
         { "beanName": "nonExistingBean", "method": "notExistingMethod" },
-        { "beanName": "restricted", "method": "canNotBeCalledBySpringConsole" }
+        { "beanName": "restricted", "method": "canNotBeCalledBySpringConsole" },
+
+        { "beanName": "returnerBeanProxy", "method": "returnBigByte" }
 
     ]
 }

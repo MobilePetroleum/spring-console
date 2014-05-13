@@ -30,9 +30,15 @@
     <bean name="sampleArrayBean" class="com.mobilepetroleum.SampleArrayBean"/>
     <bean name="restricted" class="com.mobilepetroleum.Restricted"/>
 
-    <bean name="testRunner" class="com.mobilepetroleum.test.TestRunner">
-        <constructor-arg value="${project.build.directory}${fs}spring-console-client-${spring-console.version}${fs}sco.bat"/>
-        <constructor-arg value="${project.build.outputDirectory}${fs}execute.json"/>
+    <bean name="forcedProxy" class="com.mobilepetroleum.ForcedProxy"/>
+
+    <bean id="returnerBeanProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="returnerBean" />
+        <property name="interceptorNames">
+            <list>
+                <value>forcedProxy</value>
+            </list>
+        </property>
     </bean>
 
 </beans>
