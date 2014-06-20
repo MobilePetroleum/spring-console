@@ -17,34 +17,82 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.mobilepetroleum</groupId>
-            <artifactId>spring-console</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TEST -->
+        <dependency>
+            <groupId>com.mobilepetroleum</groupId>
+            <artifactId>spring-console</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901.jdbc4</version>
-            <!--<scope>provided</scope>-->
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert-core</artifactId>
         </dependency>
     </dependencies>
 
+    <build>
+        <testResources>
+            <testResource>
+                <filtering>true</filtering>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <fork>true</fork>
+                    <executable>${JAVA_1_8_HOME}${fs}bin${fs}javac</executable>
+                    <compilerArguments>
+                        <bootclasspath>${JAVA_1_8_HOME}${fs}jre${fs}lib${fs}rt.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+         <plugin>
+             <artifactId>maven-surefire-plugin</artifactId>
+             <configuration>
+                 <jvm>${JAVA_1_8_HOME}${fs}bin${fs}java</jvm>
+             </configuration>
+         </plugin>
+        </plugins>
+    </build>
 </project>

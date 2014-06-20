@@ -8,18 +8,18 @@ import java.rmi.RemoteException;
 
 class SpringServiceBean implements SpringService {
 
-    public static final Gson GSON = new Gson();
-    private static final Restrictions restrictions = new Restrictions();
+    private static final Gson GSON = new Gson();
+    private static final ResultToStringConverter resultToStringConverter = new ResultToStringConverter();
 
-    private final static ResultToStringConverter resultToStringConverter = new ResultToStringConverter();
+    private final Restrictions restrictions = new Restrictions();
 
     private ApplicationContext applicationContext;
 
+    // @Override
     public String invoke(Invocable invocable) throws RemoteException {
         return invoke(invocable.getBeanName(), invocable.getMethodName(), invocable.getParameters());
     }
 
-    //@Override
     public String invoke(String beanName, String methodName, MethodParameter[] parameters) {
         try {
 
@@ -91,7 +91,7 @@ class SpringServiceBean implements SpringService {
 
     void setApplicationContext(ApplicationContext applicationContext) { this.applicationContext = applicationContext; }
 
-    public static String[] getAllowedPatterns() { return restrictions.getWhitelist(); }
+    public String[] getAllowedPatterns() { return restrictions.getWhitelist(); }
 
-    public static void setAllowedPatterns(String[] allowedPatterns) { restrictions.setWhitelist(allowedPatterns); }
+    public void setAllowedPatterns(String[] allowedPatterns) { restrictions.setWhitelist(allowedPatterns); }
 }

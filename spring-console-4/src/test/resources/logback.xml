@@ -1,32 +1,14 @@
 <configuration>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${project.build.directory}/test.log</file>
         <encoder>
-            <pattern>[%level] %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <target>System.err</target>
-        <encoder>
-            <pattern>%nopexception[%level] %msg%n</pattern>
+            <pattern>%msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="info">
-        <appender-ref ref="STDERR" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>

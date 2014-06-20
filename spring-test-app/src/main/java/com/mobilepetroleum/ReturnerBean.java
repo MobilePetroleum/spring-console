@@ -1,6 +1,6 @@
 package com.mobilepetroleum;
 
-@SuppressWarnings("UnusedDeclaration")
+@SuppressWarnings({"UnusedDeclaration", "SameReturnValue"})
 class ReturnerBean {
     private long returnLong() { return 999L; }
 

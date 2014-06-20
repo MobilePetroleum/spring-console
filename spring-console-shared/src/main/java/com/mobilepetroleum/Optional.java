@@ -3,7 +3,7 @@ package com.mobilepetroleum;
 @SuppressWarnings("unchecked")
 public class Optional<T> {
 
-    public static Optional EMPTY = of(null);
+    public static final Optional EMPTY = of(null);
 
     private final T value;
 

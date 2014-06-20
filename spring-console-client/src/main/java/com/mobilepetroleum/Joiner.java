@@ -1,7 +1,5 @@
 package com.mobilepetroleum;
 
-import com.google.gson.JsonElement;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;

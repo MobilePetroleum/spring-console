@@ -13,7 +13,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class AppConfig {
-    // Use only if pringConsole is on class path
+
     @AvailableOnClasspath("com.mobilepetroleum.SpringConsole")
-    Object springConsole() { return new SpringConsole(); }
+    Object springConsole() {
+        return new SpringConsole();
+    }
+
+    @AvailableOnClasspath("org.postgresql.Driver")
+    String postgresDriver() {
+        return "org.postgresql.Driver";
+    }
+
 }

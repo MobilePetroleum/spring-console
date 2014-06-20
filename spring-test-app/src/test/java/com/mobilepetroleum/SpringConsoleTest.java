@@ -4,7 +4,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.Test;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
+
 
 public class SpringConsoleTest extends JunitSpringTest {
 

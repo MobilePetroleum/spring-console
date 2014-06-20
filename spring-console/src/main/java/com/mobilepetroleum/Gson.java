@@ -9,7 +9,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 
 @SuppressWarnings("UnusedDeclaration")
-public class Gson {
+class Gson {
     com.google.gson.Gson gson = new com.google.gson.Gson();
 
     public Gson(com.google.gson.Gson gson) { this.gson = gson; }

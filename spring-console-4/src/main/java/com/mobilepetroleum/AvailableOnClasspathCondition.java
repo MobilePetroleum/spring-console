@@ -23,7 +23,7 @@ class AvailableOnClasspathCondition implements Condition {
         try {
             Class.forName(className);
             return true;
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException ignored) {
         }
         return false;
     }

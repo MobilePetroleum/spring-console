@@ -40,7 +40,7 @@ class SpringCommandRunner {
 
     private void execute(Remote remote, SpringCommand context, Invocable[] invocables) {
 
-        PojoSpringConsoleService pojoSpringConsoleService = null;
+        PojoSpringConsoleService pojoSpringConsoleService;
         try {
             pojoSpringConsoleService = PojoSpringConsoleService.create(remote.getIp(), remote.getPort(), remote.getRmiName());
         } catch (Exception e) {
@@ -79,7 +79,7 @@ class SpringCommandRunner {
         return String.format(format, args);
     }
 
-    public Invocable[] transform(Invocation[] invocations, Function<Invocation, Invocable> f) {
+    Invocable[] transform(Invocation[] invocations, Function<Invocation, Invocable> f) {
         Invocable[] invocables = new Invocable[invocations.length];
         for (int i = 0; i < invocations.length; i++) {
             invocables[i] = f.apply(invocations[i]);

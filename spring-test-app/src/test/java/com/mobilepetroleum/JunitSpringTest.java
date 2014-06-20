@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public abstract class JunitSpringTest {
 
-    protected ClassPathXmlApplicationContext ctx;
+    private ClassPathXmlApplicationContext ctx;
 
     @Before
     public void start() throws Exception {

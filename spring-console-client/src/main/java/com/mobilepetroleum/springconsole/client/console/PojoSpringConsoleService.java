@@ -4,11 +4,10 @@ import com.mobilepetroleum.Invocable;
 import com.mobilepetroleum.SpringService;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 
 class PojoSpringConsoleService {
 
-    private SpringService springService;
+    private final SpringService springService;
 
     private PojoSpringConsoleService(SpringService springService) {
         this.springService = springService;

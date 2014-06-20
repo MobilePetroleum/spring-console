@@ -9,11 +9,11 @@ class GsonFileCommandLoader {
 
     private final Gson gson = new Gson();
 
-    @SuppressWarnings("ThrowFromFinallyBlock")
     public SpringCommand create(String path) {
         return readFromPath(path);
     }
 
+    @SuppressWarnings("ThrowFromFinallyBlock")
     SpringCommand readFromPath(String path) {
         SpringCommand springCommand;
 
