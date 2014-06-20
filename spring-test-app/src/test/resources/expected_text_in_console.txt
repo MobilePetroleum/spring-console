@@ -1,0 +1,25 @@
+[INFO] [local] sampleBean::callCustomObject("1", "123", {"string":"asd","anInt":123})
+a: 1
+b: 123
+CustomPojo: CustomPojo{string='asd', anInt=123}
+[INFO] [local] Result: null
+[INFO] [local] sampleBean::callCustomObject("1", "123", {"string":"asd","anInt":123})
+a: 1
+b: 123
+CustomPojo: CustomPojo{string='asd', anInt=123}
+[INFO] [local] Result: null
+[INFO] [local] returnerBean::returnLong()
+[INFO] [local] Result: 999
+[INFO] [local] returnerBean::returnDouble()
+[INFO] [local] Result: 999.9
+[INFO] [local] returnerBean::returnBigChar()
+[INFO] [local] Result: "a"
+[INFO] [local] returnerBean::returnCustomObject()
+[INFO] [local] Result: {"string":"s999s","anInt":999}
+[INFO] [local] nonExistingBean::notExistingMethod()
+[ERROR] [local] No bean named 'nonExistingBean' or method is accessible or found
+[INFO] [local] restricted::canNotBeCalledBySpringConsole()
+[ERROR] [local] No bean named 'restricted' or method is accessible or found
+[INFO] [local] returnerBeanProxy::returnBigByte()
+Proxied! methodName = returnBigByte
+[INFO] [local] Result: -128
