@@ -6,7 +6,7 @@
 
     <groupId>com.mobilepetroleum</groupId>
     <artifactId>spring-console</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.3</version>
 
     <name>Spring Console</name>
     <description>Spring Console is a Spring management &amp; productivity tool.</description>
@@ -17,6 +17,8 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <url>https://github.com/MobilePetroleum/spring-console</url>
 
     <scm>
         <connection>scm:git:git@github.com:MobilePetroleum/spring-console.git</connection>
