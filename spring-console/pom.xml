@@ -2,14 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.mobilepetroleum</groupId>
-        <artifactId>spring-console-parent</artifactId>
-        <version>1.2.2-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.mobilepetroleum</groupId>
     <artifactId>spring-console</artifactId>
+    <version>1.2.3-SNAPSHOT</version>
 
     <name>Spring Console</name>
     <description>Spring Console is a Spring management &amp; productivity tool.</description>
@@ -38,18 +35,28 @@
 
     <properties>
         <spring.version>2.0</spring.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.11</junit.version>
+        <fest-assert.version>2.0M10</fest-assert.version>
+        <gson.version>2.2.4</gson.version>
+        <mockito.version>1.8.4</mockito.version>
+        <fs>${file.separator}</fs>
     </properties>
+
+
 
     <dependencies>
         <dependency>
             <groupId>com.mobilepetroleum</groupId>
             <artifactId>spring-console-shared</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.mobilepetroleum</groupId>
             <artifactId>spring-console-4</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <!-- SPRING -->
@@ -75,22 +82,51 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <!-- TEST -->
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert-core</artifactId>
+            <version>${fest-assert.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <encoding>UTF-8</encoding>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <executable>${JAVA_1_5_HOME}${fs}bin${fs}javac</executable>
+                    <compilerArguments>
+                        <bootclasspath>${JAVA_1_5_HOME}${fs}jre${fs}lib${fs}rt.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
