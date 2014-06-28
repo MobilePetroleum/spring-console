@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 class AppConfig {
 
     @AvailableOnClasspath("com.mobilepetroleum.SpringConsole")
-    Object springConsole() {
-        return new SpringConsole();
+    Object springConsole() throws Exception {
+        return Class.forName("com.mobilepetroleum.SpringConsole").newInstance();
     }
 
     @AvailableOnClasspath("org.postgresql.Driver")

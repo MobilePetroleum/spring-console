@@ -24,19 +24,19 @@ public class AvailableOnClasspathTest {
     }
 
     @Test
-    public void shouldLoadSpringConsole() {
+    public void shouldNotLoadSpringConsole() {
         // when
         boolean springConsoleExist = context.containsBean("springConsole");
         // then
-        assertThat(springConsoleExist).isTrue();
+        assertThat(springConsoleExist).isFalse();
     }
 
     @Test
-    public void shouldNotLoadPostgresDriver() {
+    public void shouldLoadPostgresDriver() {
         // when
         boolean postgresDriverExist = context.containsBean("postgresDriver");
         // then
-        assertThat(postgresDriverExist).isFalse();
+        assertThat(postgresDriverExist).isTrue();
     }
 
 }
