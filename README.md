@@ -5,13 +5,13 @@ Spring Console can call any method of any bean on any number of spring context.
 
 Works with Spring 2.0+ & Java 1.5+.
 
-'''
+```
 <dependency>
 	<groupId>com.mobilepetroleum</groupId>
 	<artifactId>spring-console</artifactId>
 	<version>1.2.3</version>
 </dependency>
-'''
+```
 
 # Use Spring Console
 ## Server side
